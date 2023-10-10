@@ -16,9 +16,17 @@ def vector_magnitude(v: tuple):
     return sqrt(mag)
 
 def scale_vector(s, v: tuple):
+    """
+    Multiplies each element of the vector by the same value to make
+    it smaller or larger.
+    """
     return tuple(s * x for x in v)
 
 def dot_product(v1: tuple, v2: tuple):
+    """
+    Sums the products of each element.
+    Example: a1*b1 + a2*b2 + an*bn for vectors a and b.
+    """
     total = 0
     for i in range(len(v1)):
         total += v1[i] * v2[i]
@@ -32,14 +40,20 @@ def project_vector(b: tuple, a: tuple):
     return scale_vector(dot_product(a, b) / dot_product(b, b), b)
 
 def integerize_vector(v: tuple):
+    """
+    Ensure the vector only contains integers. Truncates any floats.
+    This is necessary for RGB values as they are strictly integers.
+    """
     return tuple(int(x) for x in v)
 
 def main():
+    # Parse the command line arguments
     parser = argparse.ArgumentParser(description='Quantify image similarity using linear algebra concepts')
     parser.add_argument('image1', type=str, help='Path to the first image')
     parser.add_argument('image2', type=str, help='Path to the second image')
     args = parser.parse_args()
 
+    # Open the images and extract their values
     img_right = Image.open(args.image1)
     print("Opened image 1")
     img_left = Image.open(args.image2)
@@ -49,11 +63,13 @@ def main():
     left_rgb_list = list(img_left.getdata())
     print("Extracted RGB values")
 
+    # Initialize lists
     vector_overlay_rtl = list()
     vector_overlay_ltr = list()
     magnitude_overlay = list()
     projected_overlay = list()
 
+    # Preform operations on each image pixel by pixel
     num_pixels = len(right_rgb_list)
     # Use tqdm to create a progress bar
     for i in tqdm(range(num_pixels), desc="Processing pixels"):
@@ -69,6 +85,7 @@ def main():
         vector_overlay_rtl.append(px_vector_rtl)
         vector_overlay_ltr.append(px_vector_ltr)
 
+    # Show visualizations of subtracted vectors, projection, and magnitude.
     vector_rtl_overlay_img = Image.new('RGB', img_right.size)
     vector_rtl_overlay_img.putdata(vector_overlay_rtl)
     vector_rtl_overlay_img.show()
