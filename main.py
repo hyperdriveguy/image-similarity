@@ -3,6 +3,11 @@ from math import sqrt
 # from time import sleep
 
 def vector_magnitude(v:tuple):
+    """
+    Finds the magnitude of a given vector.
+    As it turns out, the magnitude of an RGB value abstracted as vector
+    works for finding a sane grayscale value.
+    """
     mag = 0
     for component in v:
         mag += component ** 2
@@ -19,6 +24,7 @@ def dot_product(v1:tuple, v2:tuple):
 
 def project_vector(b:tuple, a:tuple):
     """Project vector a onto b"""
+    # Handle zero vector to avoid division by zero
     if vector_magnitude(b) == 0:
         return (0, 0, 0)
     return scale_vector(dot_product(a, b) / dot_product(b, b), b)
