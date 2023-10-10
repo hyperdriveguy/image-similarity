@@ -7,5 +7,5 @@ The two images must be the exact same size in order to work.
 The images should be RGB images, not indexed or grayscale.
 
 ## Requirements
-A reasonablely recent version of Python, Pillow, and tqdm.
+A reasonably recent version of Python, Pillow, and tqdm.
 These can be obtained using pip or another package manager.
